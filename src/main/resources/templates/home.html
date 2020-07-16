@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
+                        <button id="btn-note-add" style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
 
@@ -80,8 +80,8 @@
                                             <button type="button" class="btn btn-success" th:onclick="javascript: showNoteModal([[${note.noteId}]],[[${note.noteTitle}]],[[${note.noteDescription}]])">Edit</button>
                                             <a class="btn btn-danger" th:href="@{/delete-note(id=${note.noteId})}">Delete</a>
                                         </td>
-                                        <th scope="row" th:text="${note.noteTitle}">Example Note Title</th>
-                                        <td th:text="${note.noteDescription}">Example Note Description </td>
+                                        <th class="notes-title" scope="row" th:text="${note.noteTitle}">Example Note Title</th>
+                                        <td class="notes-description" th:text="${note.noteDescription}">Example Note Description </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -200,29 +200,27 @@
                 $('#note-description').val(noteDescription ? noteDescription : '');
                 $('#noteModal').modal('show');
             }
-            function fetchDecodedPassword(credentialId){
+            async function fetchDecodedPassword(credentialId){
 
-                fetch(`http://localhost:8080/decode-password?credentialId=${credentialId}`)
-                .then(response => {
-                        return response.json();
-                    }).then(data => {
-                        console.log(JSON.stringify(data.decodePassword));
-                       return data.decodedPassword;
-                    }).catch( err => {
-                        console.log("Error:" + err);
-                        return '';
-                    });
+                let response = await fetch(`http://localhost:8080/decode-password?credentialId=${credentialId}`)
 
+                if(response.ok){
+                    let data = await response.json();
+                    let result = JSON.parse(JSON.stringify(data));
+                    return result.decodedPassword;
+                }else{
+                    alert("Error with code "+response.status);
+                }
 
             }
 
             // For opening the credentials modal
             async function showCredentialModal(credentialId, url, username, password){
 
-                var decodedPassword = ''
+                let decodedPassword = ''
                 if(credentialId){
                     decodedPassword = await fetchDecodedPassword(credentialId);
-                    console.log("DECODE PASS::" + decodedPassword);
+                    console.log("DECODE PASS::" + JSON.stringify(decodedPassword));
                 }
 
                 $('#credential-id').val(credentialId ? credentialId : '');

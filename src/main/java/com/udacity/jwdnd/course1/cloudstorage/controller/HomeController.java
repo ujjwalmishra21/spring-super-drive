@@ -47,7 +47,7 @@ public class HomeController {
         String username = authentication.getName();
         User user = userService.getUser(username);
         if(user != null) {
-            System.out.println("USER ID-----" + user.getUserId());
+
             model.addAttribute("files",fileService.getFiles(user.getUserId()));
             model.addAttribute("notes", noteService.getNotes(user.getUserId()));
             model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
@@ -76,12 +76,11 @@ public class HomeController {
         if(fileUploadError == null){
             model.addAttribute("homeSuccess", true);
             if(user != null) {
-                System.out.println("USER ID-----" + user.getUserId());
+
                 model.addAttribute("files",fileService.getFiles(user.getUserId()));
                 model.addAttribute("notes", noteService.getNotes(user.getUserId()));
                 model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
 
-                System.out.println("=======================" + fileService.getFiles(user.getUserId()));
             }
 
         }else{
@@ -98,7 +97,7 @@ public class HomeController {
         Integer rowDeleted = fileService.deleteFile(Integer.parseInt(id));
         User user = userService.getUser(authentication.getName());
         if(user != null) {
-            System.out.println("USER ID-----" + user.getUserId());
+
             model.addAttribute("files",fileService.getFiles(user.getUserId()));
             model.addAttribute("notes", noteService.getNotes(user.getUserId()));
             model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
@@ -141,7 +140,7 @@ public class HomeController {
         if(addNoteError == null){
             model.addAttribute("homeSuccess", true);
             if(user != null) {
-                System.out.println("USER ID-----" + user.getUserId());
+
                 model.addAttribute("files",fileService.getFiles(user.getUserId()));
                 model.addAttribute("notes", noteService.getNotes(user.getUserId()));
                 model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
@@ -158,7 +157,7 @@ public class HomeController {
         Integer rowDeleted = noteService.deleteNote(Integer.parseInt(id));
         User user = userService.getUser(authentication.getName());
         if(user != null) {
-            System.out.println("USER ID-----" + user.getUserId());
+
             model.addAttribute("files",fileService.getFiles(user.getUserId()));
             model.addAttribute("notes", noteService.getNotes(user.getUserId()));
             model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
@@ -170,7 +169,7 @@ public class HomeController {
         }
         return "home";
     }
-    @GetMapping("/decode-password")
+    @GetMapping(value = "/decode-password",produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public Map<String, String> decodePassword(@RequestParam Integer credentialId){
         Credential credential = credentialService.getCredential(credentialId);
@@ -202,7 +201,7 @@ public class HomeController {
         if(addCredentialError == null){
             model.addAttribute("homeSuccess", true);
             if(user != null) {
-                System.out.println("USER ID-----" + user.getUserId());
+
                 model.addAttribute("files",fileService.getFiles(user.getUserId()));
                 model.addAttribute("notes", noteService.getNotes(user.getUserId()));
                 model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
@@ -219,7 +218,7 @@ public class HomeController {
         Integer rowDeleted = credentialService.deleteCredential(Integer.parseInt(id));
         User user = userService.getUser(authentication.getName());
         if(user != null) {
-            System.out.println("USER ID-----" + user.getUserId());
+
             model.addAttribute("files",fileService.getFiles(user.getUserId()));
             model.addAttribute("notes", noteService.getNotes(user.getUserId()));
             model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
