@@ -12,12 +12,19 @@ public class Home {
     @FindBy(id = "nav-notes-tab")
     private WebElement notesNav;
 
+    @FindBy(id = "nav-credentials-tab")
+    private WebElement credentialsNav;
+
     public Home(WebDriver driver){
         PageFactory.initElements(driver, this);
     }
 
     public void navNoteSectionClick(){
         this.notesNav.click();
+    }
+
+    public void navCredentialSectionClick(){
+        this.credentialsNav.click();
     }
 
 

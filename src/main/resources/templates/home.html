@@ -77,11 +77,11 @@
                                 <tbody th:each="note:${notes}">
                                     <tr>
                                         <td>
-                                            <button type="button" class="btn btn-success" th:onclick="javascript: showNoteModal([[${note.noteId}]],[[${note.noteTitle}]],[[${note.noteDescription}]])">Edit</button>
-                                            <a class="btn btn-danger" th:href="@{/delete-note(id=${note.noteId})}">Delete</a>
+                                            <button type="button" class="all-notes-edit btn btn-success" th:onclick="javascript: showNoteModal([[${note.noteId}]],[[${note.noteTitle}]],[[${note.noteDescription}]])">Edit</button>
+                                            <a class="all-notes-delete btn btn-danger" th:href="@{/delete-note(id=${note.noteId})}">Delete</a>
                                         </td>
-                                        <th class="notes-title" scope="row" th:text="${note.noteTitle}">Example Note Title</th>
-                                        <td class="notes-description" th:text="${note.noteDescription}">Example Note Description </td>
+                                        <th class="all-notes-title" scope="row" th:text="${note.noteTitle}">Example Note Title</th>
+                                        <td class="all-notes-description" th:text="${note.noteDescription}">Example Note Description </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-credentials" role="tabpanel" aria-labelledby="nav-credentials-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showCredentialModal()">
+                        <button id="btn-credential-add" style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showCredentialModal()">
                             + Add a New Credential
                         </button>
 
@@ -136,12 +136,12 @@
                                 <tbody>
                                 <tr th:each="credential:${credentials}">
                                     <td>
-                                        <button type="button" class="btn btn-success" th:onclick="javascript: showCredentialModal([[${credential.credentialId}]],[[${credential.url}]],[[${credential.username}]],[[${credential.password}]])">Edit</button>
-                                        <a class="btn btn-danger" th:href="@{/delete-credential(id=${credential.credentialId})}">Delete</a>
+                                        <button type="button" class="all-credential-edit btn btn-success" th:onclick="javascript: showCredentialModal([[${credential.credentialId}]],[[${credential.url}]],[[${credential.username}]],[[${credential.password}]])">Edit</button>
+                                        <a class="all-credential-delete btn btn-danger" th:href="@{/delete-credential(id=${credential.credentialId})}">Delete</a>
                                     </td>
-                                    <th scope="row" th:text="${credential.url}">Example Credential URL</th>
-                                    <td th:text="${credential.username}">Example Credential Username</td>
-                                    <td th:text="${credential.password}">Example Credential Password</td>
+                                    <th class="all-credential-url" scope="row" th:text="${credential.url}">Example Credential URL</th>
+                                    <td class="all-credential-username" th:text="${credential.username}">Example Credential Username</td>
+                                    <td class="all-credential-password" th:text="${credential.password}">Example Credential Password</td>
                                 </tr>
                                 </tbody>
                             </table>

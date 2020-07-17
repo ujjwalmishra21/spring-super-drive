@@ -17,11 +17,17 @@ public class HomeNotes {
     @FindBy(id = "note-submit")
     private WebElement noteSubmit;
 
-    @FindBy(className = "notes-title")
+    @FindBy(className = "all-notes-title")
     private List<WebElement> notesTitleClass;
 
-    @FindBy(className = "notes-description")
+    @FindBy(className = "all-notes-description")
     private List<WebElement> notesDescriptionClass;
+
+    @FindBy(className = "all-notes-edit")
+    private List<WebElement> notesEditClass;
+
+    @FindBy(className = "all-notes-delete")
+    private List<WebElement> notesDeleteClass;
 
     @FindBy(id = "note-add")
     private WebElement noteAdd;
@@ -31,22 +37,25 @@ public class HomeNotes {
     }
 
     public void addNotesData(String noteTitle, String noteDescription){
+        this.noteTitle.clear();
+        this.noteDescription.clear();
         this.noteTitle.sendKeys(noteTitle);
         this.noteDescription.sendKeys(noteDescription);
     }
 
     public void submitNote(){
-        this.noteSubmit.click();
+//        this.noteSubmit.click();
+        this.noteTitle.submit();
     }
 
     public String getRecentNoteTitle(){
-        String title = this.notesTitleClass.get(notesTitleClass.size()-1).getText();
+        String title = this.notesTitleClass.get(this.notesDescriptionClass.size()-1).getText();
         System.out.println("NOTES  DATA----" + title);
         return title;
     }
 
     public String getRecentNoteDescription(){
-        String description = this.notesDescriptionClass.get(notesDescriptionClass.size()-1).getText();
+        String description = this.notesDescriptionClass.get(this.notesDescriptionClass.size()-1).getText();
         System.out.println("NOTES DESCRIPTION---" + description);
         return description;
     }
@@ -54,4 +63,6 @@ public class HomeNotes {
     public void noteAddClick(){
         this.noteAdd.click();
     }
+
+
 }
