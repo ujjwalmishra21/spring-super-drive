@@ -12,7 +12,7 @@
         <div class="container">
             <div id="logoutDiv">
                 <form action="#" th:action="@{/logout}" method="POST">
-                    <button type="submit" class="btn btn-secondary float-right">Logout</button>
+                    <button id="logout-btn" type="submit" class="btn btn-secondary float-right">Logout</button>
                 </form>
             </div>
             <div id="contentDiv" style="clear: right;">
@@ -201,8 +201,8 @@
                 $('#noteModal').modal('show');
             }
             async function fetchDecodedPassword(credentialId){
-
-                let response = await fetch(`http://localhost:8080/decode-password?credentialId=${credentialId}`)
+                let port = location.port;
+                let response = await fetch(`http://localhost:${port}/decode-password?credentialId=${credentialId}`)
 
                 if(response.ok){
                     let data = await response.json();
@@ -220,7 +220,7 @@
                 let decodedPassword = ''
                 if(credentialId){
                     decodedPassword = await fetchDecodedPassword(credentialId);
-                    console.log("DECODE PASS::" + JSON.stringify(decodedPassword));
+
                 }
 
                 $('#credential-id').val(credentialId ? credentialId : '');

@@ -14,7 +14,6 @@ public class NoteService {
     }
 
     public List<Note> getNotes(Integer userId){
-        System.out.println("USER ID getNote() " + userId);
         return notesMapper.getNotes(userId);
     }
 

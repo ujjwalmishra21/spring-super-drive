@@ -50,13 +50,11 @@ public class HomeNotes {
 
     public String getRecentNoteTitle(){
         String title = this.notesTitleClass.get(this.notesDescriptionClass.size()-1).getText();
-        System.out.println("NOTES  DATA----" + title);
         return title;
     }
 
     public String getRecentNoteDescription(){
         String description = this.notesDescriptionClass.get(this.notesDescriptionClass.size()-1).getText();
-        System.out.println("NOTES DESCRIPTION---" + description);
         return description;
     }
 

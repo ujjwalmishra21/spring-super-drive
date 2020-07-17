@@ -47,7 +47,6 @@ public class HomeController {
         String username = authentication.getName();
         User user = userService.getUser(username);
         if(user != null) {
-
             model.addAttribute("files",fileService.getFiles(user.getUserId()));
             model.addAttribute("notes", noteService.getNotes(user.getUserId()));
             model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
@@ -76,13 +75,10 @@ public class HomeController {
         if(fileUploadError == null){
             model.addAttribute("homeSuccess", true);
             if(user != null) {
-
                 model.addAttribute("files",fileService.getFiles(user.getUserId()));
                 model.addAttribute("notes", noteService.getNotes(user.getUserId()));
                 model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
-
             }
-
         }else{
             model.addAttribute("homeError", fileUploadError);
         }

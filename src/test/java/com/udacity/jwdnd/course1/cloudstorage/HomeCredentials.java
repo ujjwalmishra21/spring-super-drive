@@ -40,6 +40,9 @@ public class HomeCredentials {
     }
 
     public void addCredentialData(String url, String username, String password){
+        this.credentialURL.clear();
+        this.credentialUsername.clear();
+        this.credentialPassword.clear();
         this.credentialURL.sendKeys(url);
         this.credentialUsername.sendKeys(username);
         this.credentialPassword.sendKeys(password);
@@ -49,6 +52,15 @@ public class HomeCredentials {
         this.credentialUsername.submit();
     }
 
+    public String getModalURL(){
+        return this.credentialURL.getAttribute("value");
+    }
+    public String getModalUsername(){
+        return this.credentialUsername.getAttribute("value");
+    }
+    public String getModalPassword(){
+         return this.credentialPassword.getAttribute("value");
+    }
     public String getRecentCredentialURL(){
         return this.credentialURLClass.get(this.credentialURLClass.size()-1).getText();
     }
@@ -61,6 +73,8 @@ public class HomeCredentials {
         return this.credentialPasswordClass.get(this.credentialPasswordClass.size()-1).getText();
     }
 
-
+    public void credentialEditClick(){
+        credentialEditClass.get(0).click();
+    }
 
 }

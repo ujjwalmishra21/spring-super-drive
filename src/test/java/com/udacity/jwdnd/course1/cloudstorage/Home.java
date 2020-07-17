@@ -15,6 +15,9 @@ public class Home {
     @FindBy(id = "nav-credentials-tab")
     private WebElement credentialsNav;
 
+    @FindBy(id = "logout-btn")
+    private WebElement logoutBtn;
+
     public Home(WebDriver driver){
         PageFactory.initElements(driver, this);
     }
@@ -25,6 +28,11 @@ public class Home {
 
     public void navCredentialSectionClick(){
         this.credentialsNav.click();
+    }
+
+    public void logoutClick(){
+        System.out.println("Logging Out");
+        this.logoutBtn.click();
     }
 
 
