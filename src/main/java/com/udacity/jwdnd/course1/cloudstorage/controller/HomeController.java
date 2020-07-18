@@ -61,9 +61,13 @@ public class HomeController {
         User user = userService.getUser(authentication.getName());
         if(user != null){
             if(!fileUpload.isEmpty()){
-                Integer rowAdded = fileService.addFile(fileUpload, user.getUserId());
-                if(rowAdded < 0){
-                    fileUploadError = "There seems to be some error";
+                if(!fileService.isFileNameAvailable(fileUpload.getOriginalFilename())){
+                    fileUploadError = "Duplicate file names are not allowed";
+                }else {
+                    Integer rowAdded = fileService.addFile(fileUpload, user.getUserId());
+                    if (rowAdded < 0) {
+                        fileUploadError = "There seems to be some error";
+                    }
                 }
             }else{
                 fileUploadError = "Input cannot be empty";
@@ -73,14 +77,15 @@ public class HomeController {
         }
 
         if(fileUploadError == null){
-            model.addAttribute("homeSuccess", true);
-            if(user != null) {
-                model.addAttribute("files",fileService.getFiles(user.getUserId()));
-                model.addAttribute("notes", noteService.getNotes(user.getUserId()));
-                model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
-            }
+            model.addAttribute("homeSuccess", "File added successfully");
+
         }else{
             model.addAttribute("homeError", fileUploadError);
+        }
+        if(user != null) {
+            model.addAttribute("files",fileService.getFiles(user.getUserId()));
+            model.addAttribute("notes", noteService.getNotes(user.getUserId()));
+            model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
         }
 
         return "home";
@@ -99,7 +104,7 @@ public class HomeController {
             model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
         }
         if(rowDeleted > 0){
-            model.addAttribute("homeSuccess", true);
+            model.addAttribute("homeDeletedSuccess", "File deleted");
         }else{
             model.addAttribute("homeError", "Unable to delete file");
         }
@@ -119,22 +124,25 @@ public class HomeController {
     @PostMapping("/add-note")
     public  String addNote(Authentication authentication, Note note, Model model){
         String addNoteError = null;
-
+        String addNoteMessage = null;
         User user = userService.getUser(authentication.getName());
         if(note.getNoteId() != null){
             noteService.updateNote(note);
+            addNoteMessage = "Note updated successfully";
         }else if(user != null){
             note.setUserId(user.getUserId());
             Integer rowAdded = noteService.addNote(note);
             if(rowAdded < 0){
                 addNoteError = "Error adding note";
+            }else{
+                addNoteMessage = "Note added successfully";
             }
         }else{
             addNoteError = "Unable to add note";
         }
 
         if(addNoteError == null){
-            model.addAttribute("homeSuccess", true);
+            model.addAttribute("homeSuccess", addNoteMessage);
             if(user != null) {
 
                 model.addAttribute("files",fileService.getFiles(user.getUserId()));
@@ -159,7 +167,7 @@ public class HomeController {
             model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
         }
         if(rowDeleted > 0){
-            model.addAttribute("homeSuccess", true);
+            model.addAttribute("homeDeletedSuccess", "Note deleted");
         }else{
             model.addAttribute("homeError", "Unable to delete note");
         }
@@ -180,22 +188,26 @@ public class HomeController {
     @PostMapping("/add-credential")
     public String addCredential(Authentication authentication, Credential credential, Model model){
         String addCredentialError = null;
+        String addCredentialMessage = null;
 
         User user = userService.getUser(authentication.getName());
         if(credential.getCredentialId() != null) {
             credentialService.updateCredential(credential);
+            addCredentialMessage = "Credential updated successfully";
         }else if(user != null){
             credential.setUserId(user.getUserId());
             Integer rowAdded = credentialService.addCredential(credential);
             if(rowAdded < 0){
                 addCredentialError = "Error adding note";
+            }else{
+                addCredentialMessage = "Credential added successfully";
             }
         }else{
             addCredentialError = "Unable to add note";
         }
 
         if(addCredentialError == null){
-            model.addAttribute("homeSuccess", true);
+            model.addAttribute("homeSuccess", addCredentialMessage);
             if(user != null) {
 
                 model.addAttribute("files",fileService.getFiles(user.getUserId()));
@@ -220,7 +232,7 @@ public class HomeController {
             model.addAttribute("credentials", credentialService.getCredentials(user.getUserId()));
         }
         if(rowDeleted > 0){
-            model.addAttribute("homeSuccess", true);
+            model.addAttribute("homeDeletedSuccess", "Credential deleted");
         }else{
             model.addAttribute("homeError", "Unable to delete credential");
         }

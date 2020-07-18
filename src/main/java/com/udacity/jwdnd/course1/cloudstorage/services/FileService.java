@@ -44,4 +44,9 @@ public class FileService {
         return fileMapper.getFile(fileId);
     }
 
+    public boolean isFileNameAvailable(String filename){
+        return fileMapper.getFileOnName(filename) == null;
+    }
+
+
 }

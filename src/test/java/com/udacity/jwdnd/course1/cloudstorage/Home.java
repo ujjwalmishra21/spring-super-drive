@@ -18,6 +18,15 @@ public class Home {
     @FindBy(id = "logout-btn")
     private WebElement logoutBtn;
 
+    @FindBy(id = "home-success-msg")
+    private WebElement successMessage;
+
+    @FindBy(id = "home-deleted-msg")
+    private WebElement deletedMessage;
+
+    @FindBy(id = "home-error-msg")
+    private WebElement errorMessage;
+
     public Home(WebDriver driver){
         PageFactory.initElements(driver, this);
     }
@@ -31,8 +40,19 @@ public class Home {
     }
 
     public void logoutClick(){
-        System.out.println("Logging Out");
         this.logoutBtn.click();
+    }
+
+    public String getSuccessMessage(){
+         return this.successMessage.getText();
+    }
+
+    public String getDeletedMessage(){
+       return this.deletedMessage.getText();
+    }
+
+    public String getErrorMessage(){
+        return this.errorMessage.getText();
     }
 
 

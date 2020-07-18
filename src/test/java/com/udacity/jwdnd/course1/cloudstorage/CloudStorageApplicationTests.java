@@ -106,6 +106,9 @@ class CloudStorageApplicationTests {
 			homeNotes.submitNote();
 			Thread.sleep(2000);
 
+			homePage = new Home(driver);
+			Assertions.assertEquals("Note added successfully",homePage.getSuccessMessage());
+
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			WebElement notesNavTab = wait.until(webDriver -> webDriver.findElement(By.id("nav-notes-tab")));
 			notesNavTab.click();
@@ -133,6 +136,9 @@ class CloudStorageApplicationTests {
 			homeNotes.submitNote();
 			Thread.sleep(2000);
 
+			homePage = new Home(driver);
+			Assertions.assertEquals("Note updated successfully",homePage.getSuccessMessage());
+
 			WebDriverWait wait3 = new WebDriverWait(driver, 10);
 			notesNavTab = wait3.until(webDriver -> webDriver.findElement(By.id("nav-notes-tab")));
 			notesNavTab.click();
@@ -150,6 +156,9 @@ class CloudStorageApplicationTests {
 
 			notesDelete.get(notesDelete.size()-1).click();
 			Thread.sleep(2000);
+
+			homePage = new Home(driver);
+			Assertions.assertEquals("Note deleted",homePage.getDeletedMessage());
 
 			notesDelete = wait4.until(webDriver -> webDriver.findElements(By.className("all-notes-delete")));
 
@@ -189,6 +198,9 @@ class CloudStorageApplicationTests {
 
 			Thread.sleep(2000);
 
+			homePage = new Home(driver);
+			Assertions.assertEquals("Credential added successfully",homePage.getSuccessMessage());
+
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			WebElement credentenialsNavTab = wait.until(webDriver -> webDriver.findElement(By.id("nav-credentials-tab")));
 			credentenialsNavTab.click();
@@ -222,6 +234,9 @@ class CloudStorageApplicationTests {
 
 			Thread.sleep(2000);
 
+			homePage = new Home(driver);
+			Assertions.assertEquals("Credential updated successfully",homePage.getSuccessMessage());
+
 			WebDriverWait wait2 = new WebDriverWait(driver, 10);
 			credentenialsNavTab = wait2.until(webDriver -> webDriver.findElement(By.id("nav-credentials-tab")));
 			credentenialsNavTab.click();
@@ -236,6 +251,9 @@ class CloudStorageApplicationTests {
 			credentialDelete.get(credentialDelete.size()-1).click();
 			Thread.sleep(2000);
 
+			homePage = new Home(driver);
+			Assertions.assertEquals("Credential deleted",homePage.getDeletedMessage());
+
 			credentialDelete = wait3.until(webDriver -> webDriver.findElements(By.className("all-credential-delete")));
 
 			Assertions.assertEquals(credentialDelete.size(), prevCount - 1);
@@ -245,6 +263,7 @@ class CloudStorageApplicationTests {
 		}catch (Exception e){
 			System.out.println(e.getStackTrace());
 		}
+		logoutTest();
 	}
 
 	public void logoutTest(){

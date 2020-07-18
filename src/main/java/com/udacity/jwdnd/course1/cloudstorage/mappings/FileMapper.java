@@ -20,4 +20,7 @@ public interface FileMapper {
 
     @Delete("DELETE FROM FILES WHERE FILEID=#{fileId}")
     Integer deleteFile(Integer fileId);
+
+    @Select("SELECT * FROM FILES WHERE FILENAME=#{fileName}")
+    FileModel getFileOnName(String fileName);
 }
